@@ -3,7 +3,7 @@ import User from '../models/User'
 
 export const getPosts = async (request, response, next) => {
   try {
-    const posts = await Post.find({})
+    const posts = await Post.find({}).populate('author')
     
     response.status(200).send(posts)
 
@@ -35,22 +35,22 @@ export const createPost = async (request, response, next) => {
   }
 }
 
-// export const getUserById = async (request, response, next) => {
-//   try {
-//     const { id } = request.params;
-//     const user = await User.findById(id)
+export const getPostById = async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const post = await Post.findById(id).populate('author')
 
-//     if (!user) {
-//       response.status(404).send({ 
-//         error: 'No se encontro ningún registro en la base de datos'
-//       })
-//     }
+    if (!post) {
+      response.status(404).send({ 
+        error: 'No se encontro ningún registro en la base de datos'
+      })
+    }
     
-//     response.status(200).send(user)
-//   } catch (error) {
-//     next(error)  
-//   }
-// }
+    response.status(200).send(post)
+  } catch (error) {
+    next(error)  
+  }
+}
 
 // export const updateUserById = async (request, response, next) => {
 //   try {

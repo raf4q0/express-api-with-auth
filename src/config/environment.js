@@ -1,5 +1,3 @@
-import {} from 'dotenv'
-
 export const {
   DB_NAME,
   DB_USERNAME,

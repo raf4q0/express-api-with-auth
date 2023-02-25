@@ -27,20 +27,22 @@ export const register = async (request, response, next) => {
       password: hashedPassword
     })
 
-    let accessToken;
-    let refreshToken;
+    // let accessToken;
+    // let refreshToken;
 
     const createdUser = await user.save()
-    accessToken = JwtService.sign({ _id: createdUser._id })
-    refreshToken = JwtService.sign({ _id: createdUser._id }, '1y', REFRESH_SECRET);
+    
+    response.status(201).send(createdUser)
 
-    await RefreshToken.create({ token: accessToken })
+    // accessToken = JwtService.sign({ _id: createdUser._id })
+    // refreshToken = JwtService.sign({ _id: createdUser._id }, '1y', REFRESH_SECRET);
 
+    // await RefreshToken.create({ token: accessToken })
 
-    response.status(201).send({
-      access_token: accessToken,
-      refresh_token: refreshToken
-    })
+    // response.status(201).send({
+    //   access_token: accessToken,
+    //   refresh_token: refreshToken
+    // })
   } catch (error) {
     next(error)
   }

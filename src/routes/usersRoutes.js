@@ -15,6 +15,7 @@ const router = Router();
 router.route('/users')
   .post(createUser)
   .get(auth, getUsers);
+  // .get(getUsers);
 
 router.route('/users/:id')
   .get(getUserById)
