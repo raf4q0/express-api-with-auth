@@ -6,7 +6,7 @@ import {
   updateUserById,
   deleteUserById,
   userPosts
-} from '../controllers/usersController';
+} from '../controllers/usersController'
 
 import auth from '../middlewares/auth'
 
@@ -14,8 +14,7 @@ const router = Router();
 
 router.route('/users')
   .post(createUser)
-  .get(auth, getUsers);
-  // .get(getUsers);
+  .get(auth, getUsers)
 
 router.route('/users/:id')
   .get(getUserById)

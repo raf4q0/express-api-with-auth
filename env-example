@@ -1,0 +1,8 @@
+DB_USERNAME=<tu-usuario-db>
+DB_PASSWORD=<tu-password-db>
+DB_NAME=BlogApp
+DB_HOSTNAME=<hostname-que-te-da-atlas>
+JWT_SECRET=th1s1s@mys3cr3t
+REFRESH_SECRET=th1s1s@myr3fr3shs3cr3t
+DEBUG_MODE=true
+PORT=3000

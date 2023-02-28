@@ -4,33 +4,38 @@ import RefreshToken from '../models/RefreshToken'
 import JwtService from '../services/JwtService'
 import CustomErrorHandler from '../services/CustomErrorHandler'
 
-import { REFRESH_SECRET } from '../config/environment'
+// import { REFRESH_SECRET } from '../config/environment'
 
 
 export const register = async (request, response, next) => {
   try {
     // Validate user exists
     
-    const exist = await User.exists({ email: request.body.email })
+    // const exist = await User.exists({ email: request.body.email })
     
-    if (exist) {
-      return next(CustomErrorHandler.alreadyExist('This email is already taken'))
-    }
+    // if (exist) {
+    //   return next(CustomErrorHandler.alreadyExist('This email is already taken'))
+    // }
 
     // Create an user
-    const { name, email, password } = request.body
+    const { name, email, password, role } = request.body
     // Encrypt password
     const hashedPassword = await bcrypt.hash(password, 10) // SaltRound
     const user = new User({
       name,
       email,
+      role,
       password: hashedPassword
     })
+
+    console.log(user)
 
     // let accessToken;
     // let refreshToken;
 
     const createdUser = await user.save()
+
+    console.log(user)
     
     response.status(201).send(createdUser)
 

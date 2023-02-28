@@ -32,7 +32,7 @@ app.use(
 )
 
 // Error middleware
-app.use(errorHandler)
+// app.use(errorHandler)
 
 app.use((_, response) => {
   response.status(404).send({

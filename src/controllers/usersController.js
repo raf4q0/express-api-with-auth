@@ -8,6 +8,11 @@ import { REFRESH_SECRET } from '../config/environment'
 
 export const getUsers = async (request, response, next) => {
   try {
+    const { role } = request.user
+
+    if (role != 'admin') {
+      response.status(403).send({ error: 'Usuario no autorizado, para realizar esta acción'})
+    }
     const users = await User.find({}).populate('posts')
     
     response.status(200).send(users)

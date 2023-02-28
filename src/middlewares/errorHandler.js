@@ -3,7 +3,6 @@ import { ValidationError } from 'Joi';
 import CustomErrorHandler from '../services/CustomErrorHandler';
 
 const errorHandler = (error, request, response, next) => {
-    console.log(error)
     let statusCode = 500; //By default for any error we need to sent statuscode and msg
     let data = {
         message: 'Internal server error',

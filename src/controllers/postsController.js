@@ -1,9 +1,10 @@
 import Post from '../models/Post'
 import User from '../models/User'
+import Comment from '../models/Comment'
 
 export const getPosts = async (request, response, next) => {
   try {
-    const posts = await Post.find({}).populate('author')
+    const posts = await Post.find({}).populate('author').populate('comments')
     
     response.status(200).send(posts)
 
@@ -26,6 +27,8 @@ export const createPost = async (request, response, next) => {
 
     const user = await User.findById({ _id: newPost.author })
     user.posts.push(newPost)
+
+
     
     await user.save({ validateBeforeSave: false })
 
@@ -38,7 +41,7 @@ export const createPost = async (request, response, next) => {
 export const getPostById = async (request, response, next) => {
   try {
     const { id } = request.params;
-    const post = await Post.findById(id).populate('author')
+    const post = await Post.findById(id).populate('author').populate('comments')
 
     if (!post) {
       response.status(404).send({ 
@@ -49,6 +52,34 @@ export const getPostById = async (request, response, next) => {
     response.status(200).send(post)
   } catch (error) {
     next(error)  
+  }
+}
+
+export const postComments = async (request, response) => {
+  try {
+    const { id } = request.params
+    const post = await Post.findById(id)
+    
+    if (!post) {
+      response.status(404).send({ error: 'no existe ningun registro en la base de datos con este ID'})
+    } 
+
+    const { content, user } = request.body
+
+    const newComment = new Comment({
+      content,
+      user
+    })
+
+    const comment = await newComment.save()
+
+    post.comments.push(comment)
+
+    await post.save({ validateBeforeSave: false })
+
+    response.status(201).send(comment)
+  } catch (error) {
+    next(error)
   }
 }
 

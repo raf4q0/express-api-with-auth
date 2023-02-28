@@ -25,8 +25,8 @@ export const login = async (request, response, next) => {
       return next(CustomErrorHandler.wrongCredential())
     }
 
-    const accessToken = JwtService.sign({ _id: user._id });
-    const refreshToken = JwtService.sign({ _id: user._id }, '1y', REFRESH_SECRET);
+    const accessToken = JwtService.sign({ _id: user._id, role: user.role, email: user.email });
+    const refreshToken = JwtService.sign({ _id: user._id, role: user.role }, '1y', REFRESH_SECRET);
 
     await RefreshToken.create({ token: refreshToken })
 

@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { 
   createPost,
   getPosts,
-  getPostById
+  getPostById,
+  postComments
 } from '../controllers/postsController.js';
 
 const router = Router();
@@ -15,5 +16,8 @@ router.route('/posts/:id')
   .get(getPostById)
 //   .patch(updateUserById)
 //   .delete(deleteUserById);
+
+router.route('/posts/:id/comments')
+  .post(postComments)
 
 export default router;

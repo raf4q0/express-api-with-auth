@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 class JwtService {
     static sign(
-      payload, expiry = '60s',
+      payload, expiry = '2h',
       secret = JWT_SECRET
     ) {
       return jwt.sign(
